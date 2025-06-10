@@ -1,6 +1,10 @@
-package com.platform.market.trading.cryptocurrency;
+package com.platform.market.trading.cryptocurrency.kraken;
 
+import lombok.Getter;
+
+@Getter
 public enum TickerInfo {
+
     ASK("a"),
     BID("b"),
     LAST_TRADE_CLOSED("c"),
@@ -17,7 +21,4 @@ public enum TickerInfo {
         this.ticker = ticker;
     }
 
-    public String getTicker() {
-        return ticker;
-    }
 }
