@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS traders (
+    id UUID NOT NULL PRIMARY KEY CHECK (id <> '00000000-0000-0000-0000-000000000000'),
+    username VARCHAR(32) UNIQUE NOT NULL,
+    first_name VARCHAR(32) NOT NULL CHECK (LENGTH(TRIM(first_name)) >= 3),
+    last_name VARCHAR(32) NOT NULL CHECK (LENGTH(TRIM(last_name)) >= 3),
+    password VARCHAR(64) NOT NULL CHECK (LENGTH(TRIM(password)) >= 4)
+);
