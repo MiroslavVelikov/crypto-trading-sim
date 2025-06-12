@@ -1,4 +1,4 @@
-package com.platform.market.trading.cryptocurrency.kraken;
+package com.platform.market.trading.cryptocurrency.api.kraken;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,10 +33,6 @@ public class KrakenWsApp implements CommandLineRunner {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final ObjectMapper mapper = new ObjectMapper();
-
-    public static void main(String[] args) {
-        SpringApplication.run(KrakenWsApp.class, args);
-    }
 
     @Override
     public void run(String... args) throws Exception {

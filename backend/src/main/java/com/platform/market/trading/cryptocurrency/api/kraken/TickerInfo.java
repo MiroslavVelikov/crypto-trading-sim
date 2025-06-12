@@ -1,4 +1,4 @@
-package com.platform.market.trading.cryptocurrency.kraken;
+package com.platform.market.trading.cryptocurrency.api.kraken;
 
 import lombok.Getter;
 

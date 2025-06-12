@@ -1,0 +1,9 @@
+{
+    "name": "crypto-trading-sim",
+    "version": "1.0.0",
+    "scripts": {
+        "migrate": "cd backend/ && ./mvnw flywat:migrate",
+        "devBackend": "cd backend/ && ./mvnw spring-boot:run",
+        "dev": "npm run migrate && npm run devBackend"
+    }
+}

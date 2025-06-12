@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS traders (
     username VARCHAR(32) UNIQUE NOT NULL,
     first_name VARCHAR(32) NOT NULL CHECK (LENGTH(TRIM(first_name)) >= 3),
     last_name VARCHAR(32) NOT NULL CHECK (LENGTH(TRIM(last_name)) >= 3),
-    password VARCHAR(32) NOT NULL CHECK (LENGTH(TRIM(password)) >= 5)
+    password VARCHAR(64) NOT NULL CHECK (LENGTH(TRIM(password)) >= 4)
 );
