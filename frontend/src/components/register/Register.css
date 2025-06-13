@@ -1,0 +1,113 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register-title {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  color: #232526;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.register-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #414345;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.input-icon-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-icon-wrapper i {
+  color: #4f8cff;
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  min-width: 28px;
+  text-align: center;
+}
+
+.input-icon-wrapper .register-input {
+  flex: 1;
+  padding-left: 0.5rem;
+}
+
+.register-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.register-input::placeholder {
+  font-style: italic;
+  color: #b0b6be;
+  opacity: 1;
+}
+
+.register-input:focus {
+  border-color: #4f8cff;
+}
+
+.register-button {
+  padding: 0.75rem 1rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-button:hover {
+  background: #2563eb;
+}
+
+.login-link {
+  display: inline-block;
+  margin-left: 0.3em;
+  padding: 0.3em 0.9em;
+  background: #f3f7ff;
+  color: #2563eb;
+  border-radius: 5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  border: 1px solid #4f8cff;
+}
+
+.login-link:hover {
+  background: #4f8cff;
+  color: #fff;
+}

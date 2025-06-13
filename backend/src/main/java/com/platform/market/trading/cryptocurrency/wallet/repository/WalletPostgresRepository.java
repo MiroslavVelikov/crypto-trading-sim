@@ -4,6 +4,7 @@ import com.platform.market.trading.cryptocurrency.wallet.models.Wallet;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -96,16 +97,22 @@ public class WalletPostgresRepository implements WalletRepository {
 
     @Override
     public boolean deleteWallet(UUID id) {
-        String cond = String.format("%s = ?", WALLETS_TABLE_ID);
-        String sql = String.format("DELETE FROM %s WHERE %s", WALLETS_TABLE, cond);
-        int rows = jdbcTemplate.update(sql, id);
+        try {
+            String cond = String.format("%s = ?", WALLETS_TABLE_ID);
+            String sql = String.format("DELETE FROM %s WHERE %s", WALLETS_TABLE, cond);
+            int rows = jdbcTemplate.update(sql, id);
 
-        if (rows == 0) {
-            log.error("Failed deleting wallet with id: {}", id);
+            if (rows == 0) {
+                log.warn("No wallet found to delete with id: {}", id);
+                return false;
+            }
+
+            return true;
+        } catch (DataAccessException ex) {
+            log.error("Error deleting wallet with id: {}", id, ex);
             return false;
         }
-
-        return true;
     }
+
 
 }

@@ -5,6 +5,7 @@ import com.platform.market.trading.cryptocurrency.transaction.models.Transaction
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -49,7 +50,11 @@ public class HoldingPostgresRepository implements HoldingRepository {
         String sql = String.format("SELECT %s FROM %s WHERE %s",
             String.join(", ", HOLDINGS_TABLE_COLUMNS), HOLDINGS_TABLE, cond);
 
-        return jdbcTemplate.queryForObject(sql, HOLDINGS_ROW_MAPPER, symbol, walletId);
+        try {
+            return jdbcTemplate.queryForObject(sql, HOLDINGS_ROW_MAPPER, symbol, walletId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -77,7 +82,9 @@ public class HoldingPostgresRepository implements HoldingRepository {
         String sql = String.format("UPDATE %s SET %s = ?, %s = ? WHERE %s", HOLDINGS_TABLE, HOLDINGS_TABLE_AMOUNT, HOLDINGS_TABLE_AVERAGE_PRICE, cond);
         int rows = jdbcTemplate.update(sql,
             holding.getAmount(),
-            holding.getAveragePrice()
+            holding.getAveragePrice(),
+            holding.getSymbol(),
+            holding.getWalletId()
         );
 
         if (rows == 0) {

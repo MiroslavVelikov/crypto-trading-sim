@@ -1,0 +1,137 @@
+.login-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-card h2 {
+  margin: 0;
+  text-align: center;
+  color: #232526;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.login-title {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  color: #232526;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.login-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.login-input::placeholder {
+  font-style: italic;
+  color: #b0b6be;
+  opacity: 1;
+}
+
+.login-input:focus {
+  border-color: #4f8cff;
+}
+
+.login-button {
+  padding: 0.75rem 1rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-button:hover {
+  background: #2563eb;
+}
+
+.login-error {
+  color: #e53e3e;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.login-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #414345;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.login-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #414345;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.input-icon-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-icon-wrapper i {
+  color: #4f8cff;
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  min-width: 28px;
+  text-align: center;
+}
+
+.input-icon-wrapper .login-input {
+  flex: 1;
+  padding-left: 0.5rem;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-link {
+  display: inline-block;
+  padding: 0.3em 0.9em;
+  background: #f3f7ff;
+  color: #2563eb;
+  border-radius: 5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  border: 1px solid #4f8cff;
+  margin: 0.3em;
+}
+
+.register-link:hover {
+  background: #4f8cff;
+  color: #fff;
+}
