@@ -1,11 +1,14 @@
 {
-    "name": "crypto-trading-sim",
-    "version": "1.0.0",
-    "scripts": {
-        "docker-container": "cd backend/src/main/resources/cryptocurrency-trading-platform-postgres && docker-compose up -d",
-        "migrate": "cd backend/ && ./mvnw flywat:migrate",
-        "devBackend": "cd backend/ && ./mvnw spring-boot:run",
-        "devFrontend": "npm --prefix frontend run dev",
-        "dev": "npm run migrate && npm run devBackend && npm run devFrontend"
-    }
+  "name": "crypto-trading-sim",
+  "version": "1.0.0",
+  "scripts": {
+    "docker-container": "cd backend/src/main/resources/cryptocurrency-trading-platform-postgres && docker-compose up -d",
+    "migrate": "cd backend && mvnw.cmd flyway:migrate",
+    "devBackend": "cd backend && mvnw.cmd spring-boot:run",
+    "devFrontend": "npm --prefix frontend run dev",
+    "dev": "npm run migrate && concurrently \"npm run devBackend\" \"npm run devFrontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }
