@@ -104,7 +104,7 @@ public class WalletServiceImpl implements WalletService {
         }
 
         Wallet wallet = walletRepository.getWalletById(id);
-        if (wallet.getBalance() < price) {
+        if (type.equals(TransactionType.BUY) && wallet.getBalance() < price * amount) {
             return null;
         }
 
@@ -123,7 +123,10 @@ public class WalletServiceImpl implements WalletService {
             return null;
         }
 
-        wallet.setBalance(wallet.getBalance() - price);
+        switch (type) {
+            case TransactionType.BUY -> wallet.setBalance(wallet.getBalance() - price * amount);
+            case TransactionType.SELL -> wallet.setBalance(wallet.getBalance() + price * amount);
+        }
         walletRepository.updateWallet(wallet);
         return transactionService.createTransaction(id, symbol, amount, price, type);
     }

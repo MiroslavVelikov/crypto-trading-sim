@@ -77,6 +77,8 @@ public class HoldingServiceImpl implements HoldingService {
     }
 
     private void sellHolding(Holding holding, Double amount, Double price) {
+        System.out.println(holding.getAmount());
+        System.out.println(amount);
         if (holding.getAmount() < amount) {
             throw new InvalidHoldingAmount(
                 String.format(INVALID_HOLDING_AMOUNT_MESSAGE, holding.getSymbol())
@@ -85,7 +87,7 @@ public class HoldingServiceImpl implements HoldingService {
 
         holding.setAmount(holding.getAmount() - amount);
         holding.setAveragePrice((holding.getAveragePrice() + price) / 2);
-
+        holdingRepository.updateHolding(holding);
     }
 
 }

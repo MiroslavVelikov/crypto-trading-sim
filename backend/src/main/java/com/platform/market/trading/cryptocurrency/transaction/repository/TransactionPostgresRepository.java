@@ -48,7 +48,7 @@ public class TransactionPostgresRepository implements TransactionRepository {
 
     @Override
     public boolean createTransaction(Transaction transaction) {
-        String sql = String.format("INSERT INTO %s (%s) VALUES (?, ?, ?, ?, ?)",
+        String sql = String.format("INSERT INTO %s (%s) VALUES (?, ?, ?, ?, ?, ?)",
             TRANSACTIONS_TABLE, String.join(", ", TRANSACTIONS_TABLE_COLUMNS));
         int rows = jdbcTemplate.update(sql,
             transaction.getId(),

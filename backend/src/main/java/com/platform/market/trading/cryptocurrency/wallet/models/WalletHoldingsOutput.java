@@ -11,6 +11,6 @@ public class WalletHoldingsOutput {
 
     private final UUID id;
     private final Double balance;
-    private final List<HoldingOutput> transactions;
+    private final List<HoldingOutput> holdings;
 
 }

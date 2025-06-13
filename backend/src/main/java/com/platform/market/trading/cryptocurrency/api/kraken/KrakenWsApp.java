@@ -7,23 +7,26 @@ import com.platform.market.trading.cryptocurrency.cryptocurrency.CryptoType;
 import com.platform.market.trading.cryptocurrency.cryptocurrency.Cryptocurrency;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 @SpringBootApplication
+@CrossOrigin(origins = "http://localhost:5173")
 public class KrakenWsApp implements CommandLineRunner {
 
     private static final String KRAKEN_WS_URL = "wss://ws.kraken.com/";
@@ -42,12 +45,11 @@ public class KrakenWsApp implements CommandLineRunner {
         WebSocketClient client = new WebSocketClient(new URI(KRAKEN_WS_URL)) {
             @Override
             public void onOpen(ServerHandshake handshake) {
-                System.out.println("Connected to Kraken WebSocket");
+                log.info("Connected to Kraken WebSocket");
 
-                // Build subscription JSON message
                 try {
                     String subscribeMsg = buildSubscribeMessage(pairs);
-                    System.out.println("Sending subscription message: " + subscribeMsg);
+                    log.info("Sending subscription message: " + subscribeMsg);
                     send(subscribeMsg);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -59,70 +61,69 @@ public class KrakenWsApp implements CommandLineRunner {
                 try {
                     JsonNode node = mapper.readTree(message);
 
-                    // Kraken sends heartbeat messages as: {"event":"heartbeat"}
                     if (node.has("event")) {
                         String event = node.get("event").asText();
                         if ("subscriptionStatus".equals(event)) {
-                            System.out.println("Subscription status: " + message);
+                            log.info("Subscription status: " + message);
                         }
                         return;
                     }
 
-                    // Ticker data arrives as an array:
                     // [channelID, {ticker info}, channelName, pair]
                     if (node.isArray() && node.size() >= 4) {
                         JsonNode tickerData = node.get(1);
                         String pair = node.get(3).asText();
 
-                        // Print basic ticker info - last trade price and volume
                         if (tickerData.has(TickerInfo.LAST_TRADE_CLOSED.getTicker()) &&
                             tickerData.get(TickerInfo.LAST_TRADE_CLOSED.getTicker()).isArray()) {
                             pair = CryptoType.validateLegacy(pair);
                             Cryptocurrency cryptocurrency = cryptocurrencyMap.get(pair);
 
                             if (cryptocurrency == null) {
-                                System.out.printf("Failed to get %s%n", pair);
+                                log.error("Failed to get {}%n", pair);
                             } else {
                                 Double lastTradePrice = Double.parseDouble(
                                     tickerData.get(TickerInfo.LAST_TRADE_CLOSED.getTicker()).get(0).asText());
-                                String volume = tickerData.get(TickerInfo.VOLUME.getTicker()).get(1).asText();
                                 String bidPrice = tickerData.get(TickerInfo.BID.getTicker()).get(0).asText();
 
                                 cryptocurrency.setPrice(lastTradePrice);
                                 messagingTemplate.convertAndSend("/market/public", cryptocurrency);
-                                System.out.printf("Ticker update %s: Last price: %s, Volume(24h): %s, Bid price: %s%n",
-                                    pair, lastTradePrice, volume, bidPrice);
+                                log.info("Ticker update {}: Last price: {}, Bid price: {}",
+                                    pair, lastTradePrice, bidPrice);
                             }
                         }
                     }
 
                 } catch (Exception e) {
-                    System.err.println("Error processing message: " + message);
+                    log.error("Error processing message: " + message);
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
-                System.out.println("Connection closed: " + reason + " Code: " + code);
+                log.info("Connection closed: " + reason + " Code: " + code);
             }
 
             @Override
             public void onError(Exception ex) {
-                System.err.println("WebSocket error");
+                log.error("WebSocket error");
                 ex.printStackTrace();
             }
         };
 
         client.connect();
 
-        // Keep the app running so WebSocket stays open
         Thread.currentThread().join();
     }
 
     @Bean
     public static Map<String, Cryptocurrency> cryptocurrencyMap() {
         return cryptocurrencyMap;
+    }
+
+    public static Cryptocurrency getCryptocurrencyBySymbol(String symbol) {
+        return cryptocurrencyMap.get(symbol);
     }
 
     private String buildSubscribeMessage(List<String> pairs) throws Exception {

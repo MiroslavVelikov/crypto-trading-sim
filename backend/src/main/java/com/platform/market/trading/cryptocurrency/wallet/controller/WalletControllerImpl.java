@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,20 +24,29 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/wallets")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class WalletControllerImpl implements WalletController {
     // IF YOU HAVE TIME FIX THIS CONTROLLER OUTPUTS
 
     private static final String TRADER_ID_TOKEN = "traderId";
-    private static final String WALLED_ID_TOKEN = "walletId";
+    private static final String WALLET_ID_TOKEN = "walletId";
 
     @Autowired
     private WalletService walletService;
 
     @Override
+    @GetMapping
+    public ResponseEntity<WalletOutput> getWallet(
+        @CookieValue(TRADER_ID_TOKEN) UUID traderId
+    ) {
+        return new ResponseEntity<>(walletService.getWalletByTraderId(traderId), HttpStatus.OK);
+    }
+
+    @Override
     @GetMapping("/transactions")
     public ResponseEntity<WalletTransactionsOutput> getTransactions(
         @CookieValue(TRADER_ID_TOKEN) UUID traderId,
-        @RequestHeader(WALLED_ID_TOKEN) UUID walletId
+        @RequestHeader(WALLET_ID_TOKEN) UUID walletId
     ) {
         return new ResponseEntity<>(walletService.getWalletTransactions(walletId, traderId), HttpStatus.OK);
     }
@@ -44,34 +55,36 @@ public class WalletControllerImpl implements WalletController {
     @GetMapping("/holdings")
     public ResponseEntity<WalletHoldingsOutput> getHoldings(
         @CookieValue(TRADER_ID_TOKEN) UUID traderId,
-        @RequestHeader(WALLED_ID_TOKEN) UUID walletId
+        @RequestHeader(WALLET_ID_TOKEN) UUID walletId
     ) {
         return new ResponseEntity<>(walletService.getWalletHoldings(walletId, traderId), HttpStatus.OK);
 
     }
 
     @Override
-    @GetMapping("/holdings/buy")
+    @PostMapping("/holdings/buy")
     public ResponseEntity<TransactionOutput> buyHolding(
         @CookieValue(TRADER_ID_TOKEN) UUID traderId,
-        @RequestHeader(WALLED_ID_TOKEN) UUID walletId,
+        @RequestHeader(WALLET_ID_TOKEN) UUID walletId,
         @Valid @RequestBody CreateTransactionRequest transactionRequest
     ) {
-        return new ResponseEntity<>(walletService.makeTransaction(
+        TransactionOutput transactionOutput = walletService.makeTransaction(
             walletId,
             traderId,
             transactionRequest.getSymbol(),
             transactionRequest.getAmount(),
             transactionRequest.getPrice(),
             TransactionType.BUY
-        ), HttpStatus.OK);
+        );
+        return transactionOutput != null ?
+            new ResponseEntity<>(transactionOutput, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    @GetMapping("/holdings/sell")
+    @PostMapping("/holdings/sell")
     public ResponseEntity<TransactionOutput> sellHolding(
         @CookieValue(TRADER_ID_TOKEN) UUID traderId,
-        @RequestHeader(WALLED_ID_TOKEN) UUID walletId,
+        @RequestHeader(WALLET_ID_TOKEN) UUID walletId,
         @Valid @RequestBody CreateTransactionRequest transactionRequest
     ) {
         return new ResponseEntity<>(walletService.makeTransaction(
@@ -88,7 +101,7 @@ public class WalletControllerImpl implements WalletController {
     @GetMapping("/reset")
     public ResponseEntity<WalletOutput> resetWallet(
         @CookieValue(TRADER_ID_TOKEN) UUID traderId,
-        @RequestHeader(WALLED_ID_TOKEN) UUID walletId
+        @RequestHeader(WALLET_ID_TOKEN) UUID walletId
     ) {
         return new ResponseEntity<>(walletService.resetWallet(walletId, traderId), HttpStatus.RESET_CONTENT);
     }

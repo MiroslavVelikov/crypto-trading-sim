@@ -1,0 +1,122 @@
+.buy-cripto-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(120deg, #232526 0%, #414345 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.buy-cripto-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.buy-cripto-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  color: #232526;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.buy-cripto-balance {
+  font-size: 1.25rem;
+  color: #232526;
+  margin-bottom: 0.5rem;
+}
+.buy-cripto-balance span {
+  color: #4f8cff;
+  font-weight: 700;
+}
+
+.buy-cripto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.buy-cripto-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.buy-cripto-row label {
+  flex: 0 0 140px;
+  color: #232526;
+  font-weight: 600;
+}
+
+.buy-cripto-value {
+  flex: 1;
+  color: #232526;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.buy-cripto-input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid #4f8cff;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.buy-cripto-input:focus {
+  border-color: #232526;
+}
+
+.buy-cripto-actions {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.buy-cripto-btn {
+  min-width: 100px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.buy-cripto-btn.buy {
+  background: #fff;
+  color: #16a34a;
+  border: 2px solid #16a34a;
+}
+.buy-cripto-btn.buy:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+.buy-cripto-btn.cancel {
+  background: #fff;
+  color: #e53935;
+  border: 2px solid #e53935;
+}
+.buy-cripto-btn.cancel:hover {
+  background: #e53935;
+  color: #fff;
+}
+
+.buy-cripto-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  align-items: flex-start;
+}

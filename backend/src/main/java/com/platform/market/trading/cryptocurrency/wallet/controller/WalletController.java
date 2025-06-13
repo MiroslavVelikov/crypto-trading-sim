@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public interface WalletController {
 
+    ResponseEntity<WalletOutput> getWallet(UUID traderId);
     ResponseEntity<WalletTransactionsOutput> getTransactions(UUID traderId, UUID walletId);
     ResponseEntity<WalletHoldingsOutput> getHoldings(UUID traderId, UUID walletId);
     ResponseEntity<TransactionOutput> buyHolding(
