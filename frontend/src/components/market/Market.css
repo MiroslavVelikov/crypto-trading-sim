@@ -1,0 +1,151 @@
+.market-container {
+  background: linear-gradient(120deg, #232526 0%, #414345 100%);
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.market-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #232526;
+}
+
+.market-greeting span {
+  font-weight: 800;
+  color: #4f8cff;
+}
+
+.market-icons {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.5rem;
+  color: #4f8cff;
+}
+
+.market-icons i {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.market-icons i:hover {
+  color: #2563eb;
+}
+
+.market-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 0;
+}
+
+.market-tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  justify-items: center;
+}
+
+@media (max-width: 10000px) {
+  .market-tables-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .market-tables-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.market-table {
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.market-table th, .market-table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+.market-table th {
+  background: #f3f7ff;
+  color: #232526;
+  font-weight: 700;
+}
+
+.market-table tr:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.market-buy-btn {
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.market-buy-btn:hover {
+  background: #2563eb;
+}
+
+.price-up {
+  color: #16a34a;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+.price-down {
+  color: #dc2626;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+.price-arrow {
+  font-size: 1em;
+  margin-left: 0.3em;
+}
+
+.logout-btn {
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  margin-left: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  color: #fff;
+}

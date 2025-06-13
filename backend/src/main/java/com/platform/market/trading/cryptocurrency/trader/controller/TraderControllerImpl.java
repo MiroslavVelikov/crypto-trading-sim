@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/traders")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TraderControllerImpl implements TraderController {
     // IF YOU HAVE TIME FIX THIS CONTROLLER OUTPUTS
     @Autowired
     private TraderService traderService;
 
     @Override
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<TraderOutput> loginTrader(@Valid @RequestBody LoginTraderRequest request) {
         return new ResponseEntity<>(
             traderService.authenticateTrader(request.getUsername(), request.getPassword()),
